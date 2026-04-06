@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/enemy_stats.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"chaser"
+display_name = "Chaser"
+behavior = &"chaser"
+max_health = 28.0
+speed = 108.0
+turn_speed = 8.0
+contact_damage = 8.0
+contact_cooldown = 0.55
+xp_value = 6
+visual_scale = 0.34
+collision_radius = 16.0
+visual_tint = Color(0.878431, 0.968627, 1, 1)

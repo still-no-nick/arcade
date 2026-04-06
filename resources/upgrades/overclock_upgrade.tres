@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/upgrade_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"overclock"
+title = "Горячий разгон"
+desc = "Повышает скорострельность и слегка увеличивает прямой урон."
+stat = &"fire_rate"
+additive = 0.45
+secondary_stat = &"damage"
+secondary_additive = 2.5
+tags = Array[StringName]([&"arsenal", &"overclock"])

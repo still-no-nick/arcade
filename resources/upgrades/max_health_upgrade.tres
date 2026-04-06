@@ -10,3 +10,4 @@ desc = "Увеличивает максимум HP и лечит игрока."
 stat = &"max_health"
 multiplier = 1.0
 additive = 20.0
+tags = Array[StringName]([&"defense"])

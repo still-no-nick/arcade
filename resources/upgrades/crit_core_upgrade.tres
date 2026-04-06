@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/upgrade_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"crit_core"
+title = "Критическое ядро"
+desc = "Открывает критические попадания и усиливает их урон."
+stat = &"crit_chance"
+additive = 0.18
+secondary_stat = &"crit_multiplier"
+secondary_additive = 0.45
+tags = Array[StringName]([&"arsenal", &"crit"])

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/upgrade_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"multishot"
+title = "Разделённый залп"
+desc = "Оружие выпускает дополнительный снаряд в узком конусе."
+stat = &"projectile_count"
+additive = 1.0
+secondary_stat = &"spread_degrees"
+secondary_additive = 14.0
+tags = Array[StringName]([&"arsenal", &"volley"])

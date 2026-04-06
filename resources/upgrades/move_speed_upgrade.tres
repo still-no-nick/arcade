@@ -10,3 +10,4 @@ desc = "Персонаж двигается быстрее."
 stat = &"move_speed"
 multiplier = 1.1
 additive = 0.0
+tags = Array[StringName]([&"mobility"])
