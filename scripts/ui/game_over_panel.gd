@@ -1,7 +1,7 @@
 extends PanelContainer
 
-@onready var _result_label: Label = $Margin/VBox/ResultLabel
-@onready var _restart_button: Button = $Margin/VBox/RestartButton
+@onready var _result_label: Label = %ResultLabel
+@onready var _restart_button: Button = %RestartButton
 
 
 func _ready() -> void:
@@ -12,7 +12,7 @@ func _ready() -> void:
 
 func show_panel() -> void:
 	visible = true
-	_result_label.text = "Вы продержались %.1f с" % GameState.survival_time
+	_result_label.text = "Пилот удерживал арену %.1f секунд" % GameState.survival_time
 
 
 func _on_restart() -> void:
