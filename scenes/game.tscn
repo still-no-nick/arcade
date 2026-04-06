@@ -203,6 +203,13 @@ theme_override_font_sizes/font_size = 18
 theme_override_colors/font_color = Color(0.666667, 0.85098, 0.960784, 1)
 text = "ВРЕМЯ  0.0 с"
 
+[node name="PhaseLabel" type="Label" parent="UI/HUD/TopPanel/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.960784, 0.905882, 0.615686, 1)
+text = "PHASE  OPENING BREACH"
+
 [node name="PauseLabel" type="Label" parent="UI/HUD/TopPanel/Margin/VBox"]
 unique_name_in_owner = true
 visible = false

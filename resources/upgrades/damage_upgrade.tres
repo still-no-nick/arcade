@@ -10,3 +10,4 @@ desc = "Снаряды наносят больше урона."
 stat = &"damage"
 multiplier = 1.15
 additive = 0.0
+tags = Array[StringName]([&"arsenal"])

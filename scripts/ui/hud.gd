@@ -1,6 +1,7 @@
 extends Control
 
 @onready var _time_label: Label = %TimeLabel
+@onready var _phase_label: Label = %PhaseLabel
 @onready var _level_label: Label = %LevelLabel
 @onready var _xp_label: Label = %XPLabel
 @onready var _health_label: Label = %HealthLabel
@@ -11,8 +12,10 @@ extends Control
 
 func _ready() -> void:
 	GameState.xp_changed.connect(_on_xp_changed)
+	GameState.phase_changed.connect(_on_phase_changed)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_on_xp_changed(GameState.xp, GameState.xp_to_next)
+	_on_phase_changed(GameState.current_phase_name)
 	_bind_player_health()
 
 
@@ -33,6 +36,10 @@ func _on_xp_changed(current: int, needed: int) -> void:
 	_xp_label.text = "Опыт %d / %d" % [current, needed]
 	_xp_bar.max_value = max(1, needed)
 	_xp_bar.value = clamp(current, 0, needed)
+
+
+func _on_phase_changed(phase_name: String) -> void:
+	_phase_label.text = "PHASE  %s" % phase_name
 
 
 func _bind_player_health() -> void:

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/enemy_stats.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"rusher"
+display_name = "Rusher"
+behavior = &"rusher"
+max_health = 18.0
+speed = 118.0
+turn_speed = 9.0
+rush_speed_multiplier = 2.6
+recovery_speed_multiplier = 0.7
+contact_damage = 11.0
+contact_cooldown = 0.45
+xp_value = 8
+visual_scale = 0.28
+collision_radius = 13.0
+visual_tint = Color(1, 0.694118, 0.627451, 1)

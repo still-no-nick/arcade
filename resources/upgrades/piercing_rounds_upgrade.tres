@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/upgrade_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"piercing_rounds"
+title = "Пробивные снаряды"
+desc = "Выстрелы прошивают ещё одного врага насквозь."
+stat = &"pierce"
+additive = 1.0
+secondary_stat = &"damage_multiplier"
+secondary_additive = 0.06
+tags = Array[StringName]([&"arsenal", &"pierce"])

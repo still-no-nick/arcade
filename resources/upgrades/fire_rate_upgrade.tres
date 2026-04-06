@@ -10,3 +10,4 @@ desc = "Автооружие стреляет чаще."
 stat = &"fire_rate"
 multiplier = 1.12
 additive = 0.0
+tags = Array[StringName]([&"arsenal", &"overclock"])

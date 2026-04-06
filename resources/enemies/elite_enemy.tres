@@ -1,0 +1,22 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/enemy_stats.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"elite"
+display_name = "Elite Hunter"
+behavior = &"elite"
+max_health = 220.0
+speed = 104.0
+turn_speed = 7.5
+rush_speed_multiplier = 1.75
+recovery_speed_multiplier = 0.9
+orbit_strength = 0.75
+contact_damage = 18.0
+contact_cooldown = 0.4
+xp_value = 48
+visual_scale = 0.6
+collision_radius = 28.0
+visual_tint = Color(1, 0.807843, 0.470588, 1)
+is_elite = true
