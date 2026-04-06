@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cmjwv"]
+
+[ext_resource type="Script" path="res://resources/wave_config.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://cmj1enemy" path="res://scenes/enemy.tscn" id="2"]
+
+[resource]
+script = ExtResource("1")
+spawn_interval = 1.25
+enemies_per_tick = 1
+enemy_scene = ExtResource("2")

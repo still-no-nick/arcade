@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://cmj1player"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
+[ext_resource type="Script" path="res://scripts/components/health.gd" id="2_health"]
+[ext_resource type="Script" path="res://scripts/auto_weapon.gd" id="3_weapon"]
+[ext_resource type="Resource" path="res://resources/default_weapon.tres" id="4_weaponstats"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_player"]
+radius = 14.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
+motion_mode = 1
+script = ExtResource("1_player")
+weapon_stats = ExtResource("4_weaponstats")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_player")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.35, 0.65, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+position_smoothing_enabled = true
+position_smoothing_speed = 12.0
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_health")
+max_health = 100.0
+
+[node name="AutoWeapon" type="Node" parent="."]
+script = ExtResource("3_weapon")
+
+[node name="Timer" type="Timer" parent="AutoWeapon"]
+one_shot = false
+autostart = false

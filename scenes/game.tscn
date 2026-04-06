@@ -1,0 +1,190 @@
+[gd_scene load_steps=12 format=3 uid="uid://cmj1game"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_game"]
+[ext_resource type="PackedScene" uid="uid://cmj1player" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="Script" path="res://scripts/enemy_spawner.gd" id="3_spawner"]
+[ext_resource type="Resource" uid="uid://cmjwv" path="res://resources/default_wave.tres" id="4_wave"]
+[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="5_hud"]
+[ext_resource type="Script" path="res://scripts/ui/upgrade_panel.gd" id="6_upgrade"]
+[ext_resource type="Script" path="res://scripts/ui/game_over_panel.gd" id="7_over"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]
+size = Vector2(2100, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_side"]
+size = Vector2(48, 1300)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_game")
+
+[node name="Arena" type="Node2D" parent="."]
+
+[node name="WallTop" type="StaticBody2D" parent="Arena"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/WallTop"]
+position = Vector2(0, -610)
+shape = SubResource("RectangleShape2D_top")
+
+[node name="WallBottom" type="StaticBody2D" parent="Arena"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/WallBottom"]
+position = Vector2(0, 610)
+shape = SubResource("RectangleShape2D_top")
+
+[node name="WallLeft" type="StaticBody2D" parent="Arena"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/WallLeft"]
+position = Vector2(-1030, 0)
+shape = SubResource("RectangleShape2D_side")
+
+[node name="WallRight" type="StaticBody2D" parent="Arena"]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/WallRight"]
+position = Vector2(1030, 0)
+shape = SubResource("RectangleShape2D_side")
+
+[node name="SpawnMarkers" type="Node2D" parent="Arena"]
+
+[node name="MarkerNorth" type="Marker2D" parent="Arena/SpawnMarkers"]
+position = Vector2(0, -900)
+
+[node name="MarkerEast" type="Marker2D" parent="Arena/SpawnMarkers"]
+position = Vector2(900, 0)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Enemies" type="Node2D" parent="Entities" groups=PackedStringArray("enemies_root")]
+
+[node name="Projectiles" type="Node2D" parent="Entities" groups=PackedStringArray("projectiles_root")]
+
+[node name="Pickups" type="Node2D" parent="Entities" groups=PackedStringArray("pickups_root")]
+
+[node name="EnemySpawner" type="Node2D" parent="."]
+script = ExtResource("3_spawner")
+wave = ExtResource("4_wave")
+
+[node name="UI" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="HUD" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_hud")
+
+[node name="TimeLabel" type="Label" parent="UI/HUD"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 400.0
+offset_bottom = 40.0
+theme_override_font_sizes/font_size = 20
+text = "Время: 0"
+
+[node name="XPLabel" type="Label" parent="UI/HUD"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 44.0
+offset_right = 500.0
+offset_bottom = 72.0
+theme_override_font_sizes/font_size = 18
+text = "XP 0 / 0"
+
+[node name="HealthLabel" type="Label" parent="UI/HUD"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 76.0
+offset_right = 360.0
+offset_bottom = 104.0
+theme_override_font_sizes/font_size = 18
+text = "HP: 0 / 0"
+
+[node name="UpgradePanel" type="PanelContainer" parent="UI"]
+visible = false
+process_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -200.0
+offset_right = 260.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_upgrade")
+
+[node name="Margin" type="MarginContainer" parent="UI/UpgradePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="UI/UpgradePanel/Margin"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="UI/UpgradePanel/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Новый уровень - выберите усиление"
+horizontal_alignment = 1
+
+[node name="ButtonRow" type="VBoxContainer" parent="UI/UpgradePanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="GameOverPanel" type="PanelContainer" parent="UI"]
+visible = false
+process_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -120.0
+offset_right = 220.0
+offset_bottom = 120.0
+script = ExtResource("7_over")
+
+[node name="Margin" type="MarginContainer" parent="UI/GameOverPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="UI/GameOverPanel/Margin"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="UI/GameOverPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Игра окончена"
+horizontal_alignment = 1
+
+[node name="ResultLabel" type="Label" parent="UI/GameOverPanel/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Время: 0"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="UI/GameOverPanel/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Заново"

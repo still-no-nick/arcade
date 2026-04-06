@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/upgrade_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"move_speed"
+title = "Скорость +10%"
+desc = "Персонаж двигается быстрее."
+stat = &"move_speed"
+multiplier = 1.1
+additive = 0.0
