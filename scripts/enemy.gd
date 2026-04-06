@@ -1,10 +1,11 @@
 extends CharacterBody2D
 
 const XP_PICKUP_SCENE := preload("res://scenes/xp_pickup.tscn")
+const FeedbackHelper := preload("res://scripts/helpers/feedback_helper.gd")
 
 @export var stats: EnemyStats
 @onready var _health: Health = $Health
-@onready var _visual: CanvasItem = %Visual
+@onready var _visual: Sprite2D = %Visual
 @onready var _collision: CollisionShape2D = $CollisionShape2D
 
 var _contact_timer: float = 0.0
@@ -55,9 +56,14 @@ func _on_health_damaged(_amount: float) -> void:
 	_visual.modulate = Color(1.0, 0.62, 0.62, 1.0)
 	var tween := create_tween()
 	tween.tween_property(_visual, "modulate", stats.visual_tint, 0.14)
+	tween.parallel().tween_property(_visual, "scale", Vector2.ONE * stats.visual_scale * 1.14, 0.06).from(_visual.scale)
+	tween.tween_property(_visual, "scale", Vector2.ONE * stats.visual_scale, 0.12)
 
 
 func _on_health_depleted() -> void:
+	var feedback := FeedbackHelper.get_feedback(self)
+	if feedback and feedback.has_method("play_enemy_death"):
+		feedback.play_enemy_death(global_position, stats.visual_tint)
 	var pickups := get_tree().get_first_node_in_group("pickups_root") as Node2D
 	if pickups:
 		var p := XP_PICKUP_SCENE.instantiate() as Node2D

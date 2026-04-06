@@ -12,7 +12,13 @@ func _ready() -> void:
 
 func show_panel() -> void:
 	visible = true
+	pivot_offset = size * 0.5
+	scale = Vector2(0.9, 0.9)
+	modulate.a = 0.0
 	_result_label.text = "Пилот удерживал арену %.1f секунд" % GameState.survival_time
+	var tween := create_tween()
+	tween.tween_property(self, "modulate:a", 1.0, 0.18)
+	tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.24)
 
 
 func _on_restart() -> void:
