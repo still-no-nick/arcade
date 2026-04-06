@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var move_speed: float = 240.0
 
 @onready var _health: Health = $Health
-@onready var _visual: Polygon2D = $Polygon2D
+@onready var _visual: CanvasItem = %Visual
 
 
 func _ready() -> void:
@@ -40,9 +40,9 @@ func apply_upgrade(upgrade: UpgradeData) -> void:
 
 
 func _on_health_damaged(_amount: float) -> void:
-	_visual.modulate = Color(1.0, 0.45, 0.45, 1.0)
+	_visual.modulate = Color(1.0, 0.55, 0.55, 1.0)
 	var tween := create_tween()
-	tween.tween_property(_visual, "modulate", Color.WHITE, 0.16)
+	tween.tween_property(_visual, "modulate", Color.WHITE, 0.18)
 
 
 func _on_health_depleted() -> void:

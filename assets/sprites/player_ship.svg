@@ -1,0 +1,22 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="body" x1="64" y1="8" x2="64" y2="120" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B9F1FF"/>
+      <stop offset="0.5" stop-color="#62C9F6"/>
+      <stop offset="1" stop-color="#2567B8"/>
+    </linearGradient>
+    <linearGradient id="wing" x1="24" y1="54" x2="104" y2="88" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#112B4A"/>
+      <stop offset="1" stop-color="#2F79C7"/>
+    </linearGradient>
+    <radialGradient id="core" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(64 61) rotate(90) scale(17)">
+      <stop stop-color="#F4FFDA"/>
+      <stop offset="1" stop-color="#82F3FF"/>
+    </radialGradient>
+  </defs>
+  <path d="M64 8L84 38L102 88L64 120L26 88L44 38L64 8Z" fill="url(#body)" stroke="#E5FDFF" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M44 38L24 74L43 80L50 62L64 74L78 62L85 80L104 74L84 38L64 48L44 38Z" fill="url(#wing)" stroke="#9EEAFF" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M64 28L74 52L64 88L54 52L64 28Z" fill="#16345A" stroke="#C7FBFF" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="64" cy="61" r="13" fill="url(#core)" stroke="#F9FFF3" stroke-width="3"/>
+  <path d="M50 96L64 118L78 96" stroke="#FFCC7A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

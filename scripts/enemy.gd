@@ -4,7 +4,7 @@ const XP_PICKUP_SCENE := preload("res://scenes/xp_pickup.tscn")
 
 @export var stats: EnemyStats
 @onready var _health: Health = $Health
-@onready var _visual: Polygon2D = $Polygon2D
+@onready var _visual: CanvasItem = %Visual
 
 var _contact_timer: float = 0.0
 
@@ -45,9 +45,9 @@ func _try_damage_player(player: Node) -> void:
 
 
 func _on_health_damaged(_amount: float) -> void:
-	_visual.modulate = Color(1.0, 0.55, 0.55, 1.0)
+	_visual.modulate = Color(1.0, 0.62, 0.62, 1.0)
 	var tween := create_tween()
-	tween.tween_property(_visual, "modulate", Color.WHITE, 0.12)
+	tween.tween_property(_visual, "modulate", Color.WHITE, 0.14)
 
 
 func _on_health_depleted() -> void:

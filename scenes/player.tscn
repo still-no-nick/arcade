@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cmj1player"]
+[gd_scene load_steps=7 format=3 uid="uid://cmj1player"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
 [ext_resource type="Script" path="res://scripts/components/health.gd" id="2_health"]
 [ext_resource type="Script" path="res://scripts/auto_weapon.gd" id="3_weapon"]
 [ext_resource type="Resource" path="res://resources/default_weapon.tres" id="4_weaponstats"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player_ship.svg" id="5_ship"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_player"]
 radius = 14.0
@@ -18,9 +19,10 @@ weapon_stats = ExtResource("4_weaponstats")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_player")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color(0.35, 0.65, 1, 1)
-polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
+[node name="Visual" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture = ExtResource("5_ship")
+scale = Vector2(0.4, 0.4)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true

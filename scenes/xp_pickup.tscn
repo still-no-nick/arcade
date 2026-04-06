@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmj1xppickup"]
+[gd_scene load_steps=4 format=3 uid="uid://cmj1xppickup"]
 
 [ext_resource type="Script" path="res://scripts/xp_pickup.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/xp_core.svg" id="2_core"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xp"]
 radius = 10.0
@@ -15,6 +16,6 @@ script = ExtResource("1_script")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_xp")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color(0.35, 1, 0.55, 1)
-polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_core")
+scale = Vector2(0.26, 0.26)
