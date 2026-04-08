@@ -3,6 +3,17 @@ extends Node
 const PROJECTILE_TEXTURE := preload("res://assets/sprites/projectile_bolt.svg")
 const XP_TEXTURE := preload("res://assets/sprites/xp_core.svg")
 const SAMPLE_RATE := 22050
+const SOUND_EVENTS := [
+	"shot",
+	"hit",
+	"hit_crit",
+	"xp",
+	"enemy_death",
+	"player_hurt",
+	"player_death",
+	"level_up",
+	"upgrade",
+]
 
 var _rng := RandomNumberGenerator.new()
 var _camera: Camera2D
@@ -11,6 +22,7 @@ var _shake_trauma: float = 0.0
 var _world_layer: Node2D
 var _overlay_layer: CanvasLayer
 var _overlay_rect: ColorRect
+var _sound_streams: Dictionary = {}
 
 
 func _ready() -> void:
@@ -29,6 +41,7 @@ func _ready() -> void:
 	_overlay_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_overlay_rect.color = Color(1.0, 1.0, 1.0, 0.0)
 	_overlay_layer.add_child(_overlay_rect)
+	_prewarm_sound_streams()
 	GameState.level_up_choices.connect(_on_level_up_choices)
 	GameState.player_died.connect(_on_player_died)
 	await get_tree().process_frame
@@ -200,11 +213,19 @@ func _spawn_ring(position: Vector2, color: Color, start_radius: float, end_radiu
 func _play_sound(event_name: String, volume_db: float = -8.0) -> void:
 	var player := AudioStreamPlayer.new()
 	player.process_mode = Node.PROCESS_MODE_ALWAYS
-	player.stream = _build_sound_stream(event_name)
+	player.stream = _sound_streams.get(event_name)
+	if player.stream == null:
+		player.stream = _build_sound_stream(event_name)
+		_sound_streams[event_name] = player.stream
 	player.volume_db = volume_db
 	add_child(player)
 	player.finished.connect(player.queue_free)
 	player.play()
+
+
+func _prewarm_sound_streams() -> void:
+	for event_name in SOUND_EVENTS:
+		_sound_streams[event_name] = _build_sound_stream(event_name)
 
 
 func _build_sound_stream(event_name: String) -> AudioStreamWAV:
