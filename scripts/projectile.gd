@@ -1,5 +1,7 @@
 extends Area2D
 
+const FeedbackHelper := preload("res://scripts/helpers/feedback_helper.gd")
+
 @export var max_lifetime: float = 3.0
 
 var velocity: Vector2 = Vector2.ZERO
@@ -7,13 +9,18 @@ var damage: float = 10.0
 var pierce_left: int = 0
 var is_crit: bool = false
 var _lifetime_left: float = 0.0
-@onready var _visual: CanvasItem = $Sprite2D
+@onready var _visual: Sprite2D = $Sprite2D
+var _base_scale: Vector2 = Vector2.ONE
 
 
 func _ready() -> void:
 	_lifetime_left = max_lifetime
 	body_entered.connect(_on_body_entered)
 	rotation = velocity.angle()
+	_base_scale = _visual.scale
+	_visual.scale = _base_scale * 0.7
+	var tween := create_tween()
+	tween.tween_property(_visual, "scale", _base_scale, 0.08)
 	if is_crit:
 		_visual.modulate = Color(1.0, 0.92, 0.48, 1.0)
 		_visual.scale *= 1.18
@@ -35,6 +42,9 @@ func _on_body_entered(body: Node2D) -> void:
 	var h := body.get_node_or_null("Health") as Health
 	if h:
 		h.take_damage(damage)
+	var feedback := FeedbackHelper.get_feedback(self)
+	if feedback and feedback.has_method("play_hit"):
+		feedback.play_hit(global_position, damage, is_crit)
 	if pierce_left > 0:
 		pierce_left -= 1
 		return

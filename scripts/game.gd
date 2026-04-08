@@ -18,6 +18,9 @@ func _process(delta: float) -> void:
 func apply_upgrade(upgrade: UpgradeData) -> void:
 	if _player and _player.has_method("apply_upgrade"):
 		_player.apply_upgrade(upgrade)
+	var feedback := get_tree().get_first_node_in_group("feedback")
+	if feedback and feedback.has_method("play_upgrade_pick") and _player:
+		feedback.play_upgrade_pick(_player.global_position)
 	if upgrade != null:
 		GameState.upgrade_chosen(String(upgrade.id))
 

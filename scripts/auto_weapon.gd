@@ -1,6 +1,7 @@
 extends Node
 
 const PROJECTILE_SCENE := preload("res://scenes/projectile.tscn")
+const FeedbackHelper := preload("res://scripts/helpers/feedback_helper.gd")
 
 @onready var _timer: Timer = $Timer
 var _stats: WeaponStats
@@ -65,3 +66,6 @@ func _on_fire() -> void:
 		proj.pierce_left = _stats.pierce
 		proj.is_crit = is_crit
 		_projectiles_root.add_child(proj)
+	var feedback := FeedbackHelper.get_feedback(self)
+	if feedback and feedback.has_method("play_shot"):
+		feedback.play_shot(from, dir, projectile_count)

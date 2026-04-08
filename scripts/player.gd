@@ -1,11 +1,13 @@
 extends CharacterBody2D
 
+const FeedbackHelper := preload("res://scripts/helpers/feedback_helper.gd")
+
 @export var weapon_stats: WeaponStats
 @export var move_speed: float = 240.0
 @export var base_pickup_radius: float = 90.0
 
 @onready var _health: Health = $Health
-@onready var _visual: CanvasItem = %Visual
+@onready var _visual: Sprite2D = %Visual
 
 var pickup_radius: float = 90.0
 var regen_per_second: float = 0.0
@@ -14,6 +16,7 @@ var _base_weapon_stats: WeaponStats
 var _base_move_speed: float = 240.0
 var _base_max_health: float = 100.0
 var _last_max_health: float = 100.0
+var _base_visual_scale: Vector2 = Vector2.ONE
 var _stat_flats: Dictionary = {}
 var _stat_multipliers: Dictionary = {}
 var _tag_counts: Dictionary = {}
@@ -28,6 +31,7 @@ func _ready() -> void:
 	_base_move_speed = move_speed
 	_base_max_health = _health.max_health
 	_last_max_health = _health.max_health
+	_base_visual_scale = _visual.scale
 	pickup_radius = base_pickup_radius
 	_health.damaged.connect(_on_health_damaged)
 	_health.depleted.connect(_on_health_depleted)
@@ -38,6 +42,7 @@ func _physics_process(delta: float) -> void:
 	var dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = dir * move_speed
 	move_and_slide()
+	_update_visual_feedback(delta)
 	if regen_per_second > 0.0 and _health.current < _health.max_health:
 		_health.heal(regen_per_second * delta)
 
@@ -57,9 +62,17 @@ func _on_health_damaged(_amount: float) -> void:
 	_visual.modulate = Color(1.0, 0.55, 0.55, 1.0)
 	var tween := create_tween()
 	tween.tween_property(_visual, "modulate", Color.WHITE, 0.18)
+	tween.parallel().tween_property(_visual, "scale", _base_visual_scale * Vector2(1.22, 0.84), 0.08).from(_visual.scale)
+	tween.tween_property(_visual, "scale", _base_visual_scale, 0.14)
+	var feedback := FeedbackHelper.get_feedback(self)
+	if feedback and feedback.has_method("play_player_hurt"):
+		feedback.play_player_hurt(global_position)
 
 
 func _on_health_depleted() -> void:
+	var feedback := FeedbackHelper.get_feedback(self)
+	if feedback and feedback.has_method("play_player_death"):
+		feedback.play_player_death(global_position)
 	GameState.notify_player_died()
 
 
@@ -141,3 +154,11 @@ func _apply_max_health(new_max_health: float) -> void:
 
 func get_pickup_radius() -> float:
 	return pickup_radius
+
+
+func _update_visual_feedback(delta: float) -> void:
+	var speed_ratio := clampf(velocity.length() / maxf(move_speed, 1.0), 0.0, 1.0)
+	var target_rotation := velocity.x * 0.0018
+	var target_scale := _base_visual_scale * Vector2(1.0 + speed_ratio * 0.08, 1.0 - speed_ratio * 0.05)
+	_visual.rotation = lerpf(_visual.rotation, target_rotation, minf(1.0, delta * 10.0))
+	_visual.scale = _visual.scale.lerp(target_scale, minf(1.0, delta * 8.0))

@@ -13,6 +13,9 @@ func _ready() -> void:
 
 func _on_level_up_choices(new_level: int, choices: Array) -> void:
 	visible = true
+	pivot_offset = size * 0.5
+	scale = Vector2(0.9, 0.9)
+	modulate.a = 0.0
 	_title_label.text = "УРОВЕНЬ %d" % new_level
 	_subtitle_label.text = "Выбери протокол усиления для следующего боя."
 	for c in _buttons_parent.get_children():
@@ -33,13 +36,26 @@ func _on_level_up_choices(new_level: int, choices: Array) -> void:
 		btn.add_theme_stylebox_override("hover", _make_button_style(Color("1d3450"), Color("79d6ff")))
 		btn.add_theme_stylebox_override("pressed", _make_button_style(Color("244b72"), Color("bff2ff")))
 		btn.pressed.connect(func(): _pick(selected_upgrade))
+		btn.modulate.a = 0.0
+		btn.scale = Vector2(0.96, 0.96)
 		_buttons_parent.add_child(btn)
+	var tween := create_tween()
+	tween.tween_property(self, "modulate:a", 1.0, 0.14)
+	tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.22)
+	for i in range(_buttons_parent.get_child_count()):
+		var button := _buttons_parent.get_child(i) as Button
+		var button_tween := create_tween()
+		button_tween.tween_interval(0.05 + float(i) * 0.045)
+		button_tween.tween_property(button, "modulate:a", 1.0, 0.12)
+		button_tween.parallel().tween_property(button, "scale", Vector2.ONE, 0.16)
 
 
 func _pick(upgrade: UpgradeData) -> void:
 	var game := get_tree().get_first_node_in_group("game_root")
 	if game and game.has_method("apply_upgrade"):
 		game.apply_upgrade(upgrade)
+	scale = Vector2.ONE
+	modulate.a = 1.0
 	hide()
 
 
